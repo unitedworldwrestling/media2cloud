@@ -8,25 +8,25 @@ Description: (SO0050-search-engine) Media2Cloud - create elasticsearch cluster f
 Mappings:
     ESCluster:
         Global:
-            Version: 6.0
+            Version: 'OpenSearch_1.0'
             IndexName: media-analysis
         Index:
             Name: media-analysis
         Small:
             InstanceCount: 2
             VolumeSize: 25
-            MasterSize: "t2.small.elasticsearch"
-            WorkerSize: "m4.large.elasticsearch"
+            MasterSize: "t2.small.search"
+            WorkerSize: "m4.large.search"
         Medium:
             InstanceCount: 4
             VolumeSize: 25
-            MasterSize: "t2.medium.elasticsearch"
-            WorkerSize: "m4.large.elasticsearch"
+            MasterSize: "t2.medium.search"
+            WorkerSize: "m4.large.search"
         Large:
             InstanceCount: 8
             VolumeSize: 25
-            MasterSize: "t2.medium.elasticsearch"
-            WorkerSize: "m4.large.elasticsearch"
+            MasterSize: "t2.medium.search"
+            WorkerSize: "m4.large.search"
 
 Parameters:
     SolutionId:
@@ -127,7 +127,9 @@ Resources:
     # Elasticsearch engine for media analysis
     #
     Elasticsearch:
-        Type: AWS::Elasticsearch::Domain
+        # DeletionPolicy: Retain
+        # UpdateReplacePolicy: Retain
+        Type: AWS::OpenSearchService::Domain
         Metadata:
             cfn_nag:
                 rules_to_suppress:
@@ -143,13 +145,13 @@ Resources:
                         # ignore !FindInMap with !Ref ClusterSize warning 
                         - W1011
         Properties:
-            ElasticsearchVersion: !FindInMap [
+            EngineVersion: !FindInMap [
                 "ESCluster",
                 "Global",
                 "Version"
             ]
             DomainName: !GetAtt LowerCaseDomainName.OutputString
-            ElasticsearchClusterConfig:
+            ClusterConfig:
                 DedicatedMasterEnabled: true
                 DedicatedMasterCount: 3
                 DedicatedMasterType: !FindInMap [

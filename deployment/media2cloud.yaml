@@ -149,10 +149,10 @@ Parameters:
     AnonymousUsage:
         Type: String
         Description: send anonymous usage data
-        Default: "Yes"
+        Default: true
         AllowedValues:
-          - "No"
-          - "Yes"
+          - false
+          - true
 
 Metadata:
     AWS::CloudFormation::Interface:

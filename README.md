@@ -10,6 +10,23 @@ AWS Media2Cloud solution is designed to demonstrate a serverless ingest and anal
 
 For more information and a detailed deployment guide visit the Media2Cloud Solution at https://aws.amazon.com/answers/media-entertainment/media2cloud/.
 
+
+## UWW Customization
+
+Changes made to the original template are recorded on the [following page](CUSTOMIZATION.md)
+
+See the instructions for [Creating a custom build](#creating-a-custom-build)
+
+It can be deployed to the following S3 bucket `uww-solutions-eu-west-3`
+
+```
+cd deployment
+
+./build-s3-dist.sh --region eu-west-3 --bucket uww-solutions --solution media2cloud --version v5.2.0
+
+aws s3 cp ./regional-s3-assets/ s3://uww-solutions-eu-west-3/media2cloud/v5.2.0/ --recursive --acl bucket-owner-full-control
+```
+
 ## Architecture Overview
 ![Architecture](./deployment/tutorials/images/architecture.png)
 
